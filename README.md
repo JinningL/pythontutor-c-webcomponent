@@ -102,7 +102,7 @@ You can load the visualizer scripts either from **CDN** (recommended for product
 2. Replace `<chapter>` with your chapter name (e.g., `chapter1`) and `<example>` with your example number (e.g., `1`).
 3. In HTML, certain characters like < and > in code or text content must be written as `&lt;`; and `&gt;`; so that they are displayed correctly instead of being interpreted as HTML tags.
 4. Both annotation and folds are optional. If omitted, the visualization will still run normally without step tooltips or code folding.
----
+
 ## 📂 Project Structure
 
 ```plaintext
@@ -117,3 +117,8 @@ pythontutor-c-webcomponent/
 ├── test-component.html         # Demo HTML with <c-visualizer>
 ├── LICENSE
 └── README.md
+```
+---
+## 🐞 Contact
+
+If you encounter any bugs or issues, please [open an issue](https://github.com/JinningL/pythontutor-c-webcomponent/issues) or contact me directly at **imjinning.liu@mail.utoronto.ca**.
