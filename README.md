@@ -7,10 +7,13 @@ Supports **inline annotations**, **code folding**, and **HTML to trace.json extr
 
 ## 📸 Demo
 
-| Visualizer Example |
-|--------------------|
-| ![Visualizer Demo](docs/demo.png) |
+Code execution visualization with inline annotations and heap/stack view:
 
+| Code Step | Stack & Heap View |
+|-----------|------------------|
+| ![Code Step](docs/demo-step.png) | ![Heap View](docs/demo-heap.png) |
+
+[👉 Try the live demo here](https://JinningL.github.io/pythontutor-c-webcomponent/test-component.html)
 ---
 
 ## ✨ Features
