@@ -27,28 +27,36 @@ Code execution visualization with inline annotations and heap/stack view:
 
 ---
 ## 🛠 Usage
-### 1) Install dependencies
+
+### 1) Quick start — download one script
+**macOS / Linux**
 ```bash
-pip install beautifulsoup4
+curl -L -O https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@main/viztrace.py
+pip install beautifulsoup4 requests
+python viztrace.py your-page.html
 ```
 
-### 2) Set the HTML file name in the script
+**Windows (PowerShell)**
 ```bash
-HTML_FILE = "test-component.html"   # Change to your HTML file name
-BACKEND_SCRIPT = "backend.py"       # Backend script (keep in the same directory)
-```
-### 3) Run the script to generate trace.json
-```bash
-python run_and_visualize.py
+iwr https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@main/viztrace.py -OutFile viztrace.py
+pip install beautifulsoup4 requests
+python viztrace.py your-page.html
 ```
 
 The script will:
-- Scan the HTML for `<c-visualizer>` tags
-- Read the `chapter` / `example` attributes
-- Save the extracted code to `example/<chapter>/example<example>/code.c`
-- Call `backend.py` to generate the `trace.json`
+- scan your-page.html for `<c-visualizer>` tags
+- extract the inline C code
+- produce code.c and trace.json under:
+ ```bash
+ example/<your-page-stem>/example<EXAMPLE_NUMBER>/
+ ```
+&nbsp;  
+> **Note – Keep example numbers unique:**
+> 
+> The `example="..."` attribute (`EXAMPLE_NUMBER`) determines the folder name  `example/<your-page-stem>/example<EXAMPLE_NUMBER>/` where `trace.json` is stored and loaded. Reusing the same number will overwrite files or break the visualization.
+&nbsp;  
 
-### 4) Include the visualizer via CDN
+### 2) Include the visualizer via CDN
 
 #### **Latest main:**
 ```html
@@ -58,20 +66,19 @@ The script will:
 #### **Minimal HTML example**
 ```html
 <!doctype html>
+<!doctype html>
 <html>
 <head>
   <meta charset="utf-8" />
   <title>Visualizer Web Component</title>
-  <!-- One line to load all CSS/JS dependencies -->
-  <script src="https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@main/loader.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@28e1db2/loader.js"></script>
 </head>
 <body>
-  <c-visualizer chapter="chapter1" example="1" lang="c">
+  <!-- Only 'example' is required and must be a positive integer -->
+  <c-visualizer example="1" lang="c">
     <script type="application/json" data-kind="annotation">
       {
-        "annotation": {
-          "2": "This line prints 'Hello, world!'"
-        },
+        "annotation": { "2": "This line prints 'Hello, world!'" },
         "folds": [{ "start": 1, "end": 2 }]
       }
     </script>
@@ -87,10 +94,13 @@ The script will:
 ```
 
 **Note:**  
-1. `<c-visualizer>` will request the file at `example/<chapter>/example<example>/trace.json`.  
-2. Replace `<chapter>` with your chapter name (e.g., `chapter1`) and `<example>` with your example number (e.g., `1`).
-3. In HTML, certain characters like < and > in code or text content must be written as `&lt;`; and `&gt;`; so that they are displayed correctly instead of being interpreted as HTML tags.
-4. Both annotation and folds are optional. If omitted, the visualization will still run normally without step tooltips or code folding.
+- The component loads trace.json from:
+```bash
+example/<current-html-filename-without-extension>/example<example>/trace.json
+```
+- The example attribute is required, must be a unique positive integer per page.
+- In HTML, certain characters like < and > in code or text content must be written as `&lt;`; and `&gt;`; so that they are displayed correctly instead of being interpreted as HTML tags.
+- Both annotation and folds are optional. If omitted, the visualization will still run normally without step tooltips or code folding.
 
 ---
 ## 📂 Project Structure
