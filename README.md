@@ -73,10 +73,24 @@ You can load the visualizer scripts either from **CDN** (recommended for product
 </head>
 <body>
   <c-visualizer chapter="chapter1" example="1" lang="c">
-int main() {
-  return 0;
-}
-  </c-visualizer>
+      <script type="application/json" data-kind="annotation">
+        {
+          "annotation": {
+            "2": "This line prints 'Hello, world!'",
+          },
+          "folds": [
+            { "start": 1, "end": 2 }
+          ]
+        }
+        
+      </script>
+      #include &lt;stdlib.h&gt;
+      int main() {
+        printf("Hello, world!");
+        return 0;
+        }      
+      
+    </c-visualizer>
 </body>
 </html>
 ```
@@ -85,6 +99,7 @@ int main() {
 1. `<c-visualizer>` will request the file at `example/<chapter>/example<example>/trace.json`.  
 2. Replace `<chapter>` with your chapter name (e.g., `chapter1`) and `<example>` with your example number (e.g., `1`).
 3. In HTML, certain characters like < and > in code or text content must be written as `&lt;`; and `&gt;`; so that they are displayed correctly instead of being interpreted as HTML tags.
+4. Both annotation and folds are optional. If omitted, the visualization will still run normally without step tooltips or code folding.
 ---
 ## 📂 Project Structure
 
