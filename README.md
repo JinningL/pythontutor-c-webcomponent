@@ -5,6 +5,14 @@ Supports **inline annotations**, **code folding**, and **HTML to trace.json extr
 
 ---
 
+## 📸 Demo
+
+| Visualizer Example |
+|--------------------|
+| ![Visualizer Demo](docs/demo.png) |
+
+---
+
 ## ✨ Features
 
 - **Easy Embed** — One `<c-visualizer>` tag shows the full execution visualization.
