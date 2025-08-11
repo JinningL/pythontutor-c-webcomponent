@@ -78,7 +78,7 @@ You can load the visualizer scripts either from **CDN** (recommended for product
       <script type="application/json" data-kind="annotation">
         {
           "annotation": {
-            "2": "This line prints 'Hello, world!'",
+            "2": "This line prints 'Hello, world!'"
           },
           "folds": [
             { "start": 1, "end": 2 }
@@ -86,7 +86,7 @@ You can load the visualizer scripts either from **CDN** (recommended for product
         }
         
       </script>
-      #include &lt;stdlib.h&gt;
+      #include &lt;stdio.h&gt;
       int main() {
         printf("Hello, world!");
         return 0;
