@@ -103,6 +103,7 @@ You can load the visualizer scripts either from **CDN** (recommended for product
 3. In HTML, certain characters like < and > in code or text content must be written as `&lt;`; and `&gt;`; so that they are displayed correctly instead of being interpreted as HTML tags.
 4. Both annotation and folds are optional. If omitted, the visualization will still run normally without step tooltips or code folding.
 
+---
 ## 📂 Project Structure
 
 ```plaintext
