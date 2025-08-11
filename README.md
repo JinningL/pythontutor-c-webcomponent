@@ -50,11 +50,6 @@ The script will:
  ```bash
  example/<your-page-stem>/example<EXAMPLE_NUMBER>/
  ```
-&nbsp;  
-> **Note – Keep example numbers unique:**
-> 
-> The `example="..."` attribute (`EXAMPLE_NUMBER`) determines the folder name  `example/<your-page-stem>/example<EXAMPLE_NUMBER>/` where `trace.json` is stored and loaded. Reusing the same number will overwrite files or break the visualization.
-&nbsp;  
 
 ### 2) Include the visualizer via CDN
 
@@ -93,12 +88,12 @@ The script will:
 </html>
 ```
 
-**Note:**  
+⚠️ **Note:**  
 - The component loads trace.json from:
 ```bash
-example/<current-html-filename-without-extension>/example<example>/trace.json
+example/<current-html-filename-without-extension>/example<EXAMPLE_NUMBER>/trace.json
 ```
-- The example attribute is required, must be a unique positive integer per page.
+- The example attribute is required, must be a unique positive integer per page！
 - In HTML, certain characters like < and > in code or text content must be written as `&lt;`; and `&gt;`; so that they are displayed correctly instead of being interpreted as HTML tags.
 - Both annotation and folds are optional. If omitted, the visualization will still run normally without step tooltips or code folding.
 
