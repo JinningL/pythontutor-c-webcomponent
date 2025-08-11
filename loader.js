@@ -1,5 +1,5 @@
 (function () {
-
+  
   const self = document.currentScript && document.currentScript.src;
   const m = self && self.match(/@([^/]+)\/loader\.js$/);
   const ver = (m && m[1]) || "main";
@@ -11,12 +11,7 @@
     "https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css",
     "https://unpkg.com/tippy.js@6/dist/tippy.css",
   ];
-  css.forEach(href => {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = href;
-    document.head.appendChild(link);
-  });
+  css.forEach(h => { const l=document.createElement("link"); l.rel="stylesheet"; l.href=h; document.head.appendChild(l); });
 
   const js = [
     "https://cdn.jsdelivr.net/npm/prismjs/prism.js",
@@ -28,11 +23,7 @@
     `${base}improved-visualize.js`,
     `${base}highlight.js`,
   ];
-  js.forEach(src => {
-    const s = document.createElement("script");
-    s.src = src;
-    document.head.appendChild(s);
-  });
+  js.forEach(s => { const el=document.createElement("script"); el.src=s; document.head.appendChild(el); });
 
   const esm = document.createElement("script");
   esm.type = "module";
