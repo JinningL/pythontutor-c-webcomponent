@@ -28,7 +28,7 @@ Code execution visualization with inline annotations and heap/stack view:
 ---
 ## 🛠 Usage
 
-### 1) Quick start — download one script
+### 1) Quick start — download viztrace.py
 **macOS / Linux**
 ```bash
 curl -L -O https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@main/viztrace.py
