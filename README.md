@@ -1,5 +1,7 @@
 # pythontutor-c-webcomponent
 
+[![Status](https://img.shields.io/badge/status-work%20in%20progress-yellow)](https://github.com/JinningL/pythontutor-c-webcomponent)
+
 A web component for visualizing **C code execution** with an enhanced [Python Tutor](https://pythontutor.com/) engine.  
 Supports **inline annotations**, **code folding**, and **HTML to trace.json extraction** for textbook embedding.
 
