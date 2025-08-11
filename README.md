@@ -44,9 +44,9 @@ python viztrace.py your-page.html
 ```
 
 The script will:
-- scan your-page.html for `<c-visualizer>` tags
-- extract the inline C code
-- produce code.c and trace.json under:
+- **scan** `your-page.html` for `<c-visualizer>` tags
+- **extract** the inline C code
+- **produce** `code.c` and `trace.json` under:
  ```bash
  example/<your-page-stem>/example<EXAMPLE_NUMBER>/
  ```
