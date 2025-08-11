@@ -48,52 +48,40 @@ The script will:
 - Save the extracted code to `example/<chapter>/example<example>/code.c`
 - Call `backend.py` to generate the `trace.json`
 
-### 4) Include scripts in your HTML
+### 4) Include the visualizer via CDN
 
-#### **Option A: CDN**  
-You can load the visualizer scripts either from **CDN** (recommended for production) or from **local build files**.
- 
+### Latest main:
 ```html
-<!-- Core visualization logic -->
-<script src="https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@v0.1.0/build/improved-visualize.js"></script>
-
-<!-- Web Component registration -->
-<script type="module" src="link_to_be_created"></script>
+<script src="https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@main/loader.js"></script>
 ```
 
-#### **Option B: Local files**  
-```html
-<script src="build/improved-visualize.js"></script>
-<script type="module" src="build/smth"></script>
-```
 #### **Minimal HTML example**
 ```html
 <!doctype html>
 <html>
 <head>
   <meta charset="utf-8" />
-  <!-- Use one of the script loading options above -->
+  <title>Visualizer Web Component</title>
+  <!-- One line to load all CSS/JS dependencies -->
+  <script src="https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@main/loader.js"></script>
 </head>
 <body>
   <c-visualizer chapter="chapter1" example="1" lang="c">
-      <script type="application/json" data-kind="annotation">
-        {
-          "annotation": {
-            "2": "This line prints 'Hello, world!'"
-          },
-          "folds": [
-            { "start": 1, "end": 2 }
-          ]
-        }
-        
-      </script>
-      #include &lt;stdio.h&gt;
-      int main() {
-        printf("Hello, world!");
-        return 0;
-        }      
-      
-    </c-visualizer>
+    <script type="application/json" data-kind="annotation">
+      {
+        "annotation": {
+          "2": "This line prints 'Hello, world!'"
+        },
+        "folds": [{ "start": 1, "end": 2 }]
+      }
+    </script>
+
+    #include &lt;stdio.h&gt;
+    int main() {
+      printf("Hello, world!");
+      return 0;
+    }
+  </c-visualizer>
 </body>
 </html>
 ```
@@ -116,6 +104,7 @@ pythontutor-c-webcomponent/
 │       └── trace.json
 ├── backend.py                  # Python Tutor C backend
 ├── run_and_visualize.py        # Parse HTML & run backend to generate trace
+├── loader.js                   # One-line CDN loader (loads all CSS/JS deps)
 ├── test-component.html         # Demo HTML with <c-visualizer>
 ├── LICENSE
 └── README.md
