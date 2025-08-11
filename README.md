@@ -50,7 +50,7 @@ The script will:
 
 ### 4) Include the visualizer via CDN
 
-### Latest main:
+#### **Latest main:**
 ```html
 <script src="https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@main/loader.js"></script>
 ```
