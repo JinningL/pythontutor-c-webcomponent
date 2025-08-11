@@ -107,7 +107,7 @@ You can load the visualizer scripts either from **CDN** (recommended for product
 ```plaintext
 pythontutor-c-webcomponent/
 ├── build/                     # Compiled JS/CSS assets
-├── example/                   # Generated code + trace + annotations
+├── example/                   # Generated code + trace 
 │   └── chapter1/example1/
 │       ├── code.c
 │       └── trace.json
