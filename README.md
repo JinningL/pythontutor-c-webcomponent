@@ -9,9 +9,8 @@ Supports **inline annotations**, **code folding**, and **HTML to trace.json extr
 
 Code execution visualization with inline annotations and heap/stack view:
 
-| Code Step | Stack & Heap View |
-|-----------|------------------|
-| ![Code Step](docs/demo-step.png) | ![Heap View](docs/demo-heap.png) |
+
+ ![Code Step](docs/demo.png)
 
 [![Live Demo](https://img.shields.io/badge/Demo-Live-blue)](https://JinningL.github.io/pythontutor-c-webcomponent/test-component.html)
 ---
