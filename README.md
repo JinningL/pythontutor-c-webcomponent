@@ -48,6 +48,7 @@ The script will:
 
 ### 4) Include scripts in your HTML
 
+#### **Option A: CDN**  
 You can load the visualizer scripts either from **CDN** (recommended for production) or from **local build files**.
  
 ```html
