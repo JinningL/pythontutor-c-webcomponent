@@ -1,38 +1,29 @@
-#include <stdlib.h>
-#include <stdlib.h>
+#include <stdio.h>
 
-typedef struct node {
-    int data;
-    struct node *next;
-} Node;
+  // regular
+  struct Account {
+     int account_number;
+     double balance;
+     char *first_name;
+     char *last_name;
+  };
 
-Node *createNode(int value);
+  // typedef version
+  typedef struct {
+     int    xxx;
+     int    yyy;
+  } Point;
 
-int main(void) {
-    Node *head = NULL;
+  int main() {
+    struct Account my_account;
+    my_account.account_number = 42;
+    my_account.balance = 3.141592653589735;
+    my_account.first_name = "Jinning";
+    my_account.last_name = "Liu";
+    printf("hello");
 
-    head = createNode(1);          
-    // returns pointer to Node
-    // WRONG! head = createNode(2); 
-    head->next = createNode(2);
-
-    head->next->next = createNode(4);
-    head->next->next->next = createNode(7);
-
-    printf("%d -> ", head->data);
-    printf("%d -> ", head->next->data);
-    printf("%d -> ", head->next->next->data);
-    printf("%d\n", head->next->next->next->data);
+    Point my_point;
+    my_point.xxx = 12345;
+    my_point.yyy = 54321;
     return 0;
-}
-
-Node *createNode(int value) {
-    Node *newNode = (Node *)malloc(sizeof(Node));
-
-    if (newNode != NULL) {
-        newNode->data = value;
-        newNode->next = NULL;
-    }
-
-    return newNode;
-}
+  }   
