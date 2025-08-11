@@ -110,8 +110,7 @@ pythontutor-c-webcomponent/
 ├── example/                   # Generated code + trace + annotations
 │   └── chapter1/example1/
 │       ├── code.c
-│       ├── trace.json
-│       └── annotation.json
+│       └── trace.json
 ├── backend.py                  # Python Tutor C backend
 ├── run_and_visualize.py        # Parse HTML & run backend to generate trace
 ├── test-component.html         # Demo HTML with <c-visualizer>
