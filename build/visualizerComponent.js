@@ -2,10 +2,18 @@ class CVisualizer extends HTMLElement {
   constructor() { super(); }
 
   async connectedCallback() {
-    const chapter = this.getAttribute("chapter") || "chapterX";
-    const example = this.getAttribute("example") || "X";
-    const traceUrl = `example/${chapter}/example${example}/trace.json`;
-    const annotationUrl = this.getAttribute("annotation") || `example/${chapter}/example${example}/annotation.json`; // 保留但不用
+    
+    const pageStem = (location.pathname.split('/').pop() || 'index')
+    .replace(/\.[^/.]+$/, '') || 'index';
+  
+    const exampleStr = (this.getAttribute("example") || "").trim();
+    if (!/^\d+$/.test(exampleStr)) {
+      this.innerHTML = `<p style="color:red;">❌ Error: &lt;c-visualizer&gt; requires a valid example number (positive integer).</p>`;
+      console.error("[c-visualizer] Invalid 'example':", exampleStr);
+      return;
+    }
+  
+    const traceUrl = `example/${pageStem}/example${exampleStr}/trace.json`;
     const frontendLang = this.getAttribute("lang") || "c";
 
     // ✅ 先在覆盖 innerHTML 之前，从内联 <script> 读取 annotation
@@ -35,7 +43,7 @@ class CVisualizer extends HTMLElement {
     })(this);
 
     // ✅ 你的 trace 逻辑保持不变
-    const divId = `vis-${chapter}-ex${example}-${Math.floor(Math.random() * 100000)}`;
+    const divId = `vis-${pageStem}-ex${exampleStr}-${Math.floor(Math.random() * 100000)}`;
     this.innerHTML = `<div id="${divId}">Loading trace...</div>`;
 
     try {
