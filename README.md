@@ -13,7 +13,7 @@ Code execution visualization with inline annotations and heap/stack view:
 |-----------|------------------|
 | ![Code Step](docs/demo-step.png) | ![Heap View](docs/demo-heap.png) |
 
-[👉 Try the live demo here](https://JinningL.github.io/pythontutor-c-webcomponent/test-component.html)
+[![Live Demo](https://img.shields.io/badge/Demo-Live-blue)](https://JinningL.github.io/pythontutor-c-webcomponent/test-component.html)
 ---
 
 ## ✨ Features
