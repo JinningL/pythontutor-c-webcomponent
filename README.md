@@ -21,7 +21,8 @@ Code execution visualization with inline annotations and heap/stack view:
 - **Easy Embed** — One `<c-visualizer>` tag shows the full execution visualization.
 - **C Language Support** — Backend generates execution traces for C programs.
 - **Annotation Support** — Show step-by-step tooltips using JSON.
-- **Auto Extraction Script** — Parse HTML, extract code, run backend, and save `trace.json`.
+- **Code Folding** — Collapse and expand code sections for cleaner view.
+- **Syntax Highlighting** — Highlight code syntax automatically for better readability.
 
 ---
 ## 🛠 Usage
