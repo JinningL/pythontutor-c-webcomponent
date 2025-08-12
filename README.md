@@ -132,7 +132,7 @@ Inside `<c-visualizer>`, add an inline JSON with the **folds field** to specify 
 pythontutor-c-webcomponent/
 ├── build/                     # Compiled JS/CSS assets
 ├── example/                   # Generated code + trace 
-│   └── chapter1/example1/
+│   └── test-component/example1/
 │       ├── code.c
 │       └── trace.json
 ├── backend.py                  # Python Tutor C backend
