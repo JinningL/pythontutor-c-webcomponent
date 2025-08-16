@@ -1,50 +1,53 @@
-// ------------- 只用内联 JSON，按实例加载 -------------
+// ------------- Load inline JSON annotation per instance -------------
 window.loadInlineAnnotation = function (domRoot) {
-  // domRoot 是 jQuery 对象（你的代码里就是这样传的）
+  // domRoot might be a jQuery object; if so, take domRoot[0], otherwise fall back to document
   const rootEl = domRoot && domRoot[0] ? domRoot[0] : document;
 
   let notes = {};
   let folds = [];
 
+  // Look for an inline <script type="application/json" data-kind="annotation"> inside this root
   const inlineEl = rootEl.querySelector('script[type="application/json"][data-kind="annotation"]');
   if (inlineEl) {
     try {
+      // Parse the inline JSON
       const parsed = JSON.parse((inlineEl.textContent || "").trim());
       notes = parsed.annotation || {};
       folds = parsed.folds || [];
     } catch (e) {
-      console.error("[annotation] 解析内联 JSON 失败：", e);
+      console.error("[annotation] Failed to parse inline JSON:", e);
     }
   }
 
-  // 把注释数据缓存到当前实例的根元素上，避免全局冲突
   rootEl.__stepNotes = notes;
   rootEl.__folds = folds;
 
 };
 
-// ------------- 显示某一步对应行的气泡说明 -------------
+// ------------- Show tooltip note for a specific step/line -------------
 window.showStepNote = function (stepIndex, lineNumber, domRoot) {
-  // domRoot: jQuery 根（实例作用域）
+  // domRoot is the jQuery wrapper for the current instance
   const allCodeCells = domRoot.find("td.cod");
 
-  // 清理旧的 tippy
+  // Clear any previous tooltips or observers to avoid memory leaks
   allCodeCells.each(function () {
     if (this._tippy) this._tippy.destroy();
-    if (this.__io) { // 清理旧的 IntersectionObserver（防泄漏）
+    if (this.__io) { 
       try { this.__io.disconnect(); } catch (_) {}
       this.__io = null;
     }
   });
 
+  // Find the target cell for this line number
   const targetTd = allCodeCells.get(lineNumber - 1);
 
-  // 优先用当前实例的注释表
+  // Prefer the annotation map attached to this instance’s root element
   const rootEl = domRoot && domRoot[0] ? domRoot[0] : document;
   const notesMap = (rootEl && rootEl.__stepNotes) || window.stepNotes || {};
   const note = notesMap[String(lineNumber)] || notesMap[lineNumber];
 
   if (targetTd && note) {
+    // Attach a tooltip to the target cell
     const tip = tippy(targetTd, {
       content: note,
       showOnCreate: true,
@@ -56,7 +59,7 @@ window.showStepNote = function (stepIndex, lineNumber, domRoot) {
       maxWidth: 250,
     });
 
-    // 进入可视区域才显示，离开则隐藏
+    // Use IntersectionObserver: only show tooltip when the line is in the viewport
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -67,8 +70,9 @@ window.showStepNote = function (stepIndex, lineNumber, domRoot) {
       { threshold: 0.5 }
     );
 
+    // Start observing the target cell
     io.observe(targetTd);
-    // 存起来，下一次切换步骤时清理
+    // Save the observer on the element for later cleanup
     targetTd.__io = io;
   }
 };
