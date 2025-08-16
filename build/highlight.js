@@ -12,11 +12,11 @@ style.textContent = `
 
 document.head.appendChild(style);
 
-// 等待 DOM 和 visualize 渲染完毕后执行
+// Wait until DOM and visualize rendering are finished
 function highlightCode() {
   const interval = setInterval(() => {
-    console.log("Highlight script running");
-    // 选中所有在visualize.js中class为td.cod的内容
+    // console.log("Highlight script running");
+    // Select all elements with class "td.cod" rendered by visualize.js
     const codeCells = document.querySelectorAll("td.cod");
     if (codeCells.length > 0) {
       codeCells.forEach((cell) => {
@@ -39,27 +39,27 @@ window.addEventListener("load", highlightCode);
 function highlightExecutedLine(lineNumber) {
   const codeCells = document.querySelectorAll("td.cod");
 
-  // 清除所有旧的高亮
+  // Clear all previous highlights
   codeCells.forEach((cell) => {
     cell.classList.remove("executed-highlight");
   });
-  codeCells.forEach((cell) => {
-    cell.classList.remove("next-highlight");
-  });
+  // codeCells.forEach((cell) => {
+  //   cell.classList.remove("next-highlight");
+  // });
 
-  // 高亮目标行（注意 lineNumber 是从 1 开始的，DOM 是从 0）
+  // Highlight the target line (note: lineNumber starts from 1, DOM index starts from 0)
   const target = codeCells[lineNumber - 1];
   if (target) {
     target.classList.add("executed-highlight");
   }
 
-  for (let i = lineNumber; i < codeCells.length; i++) {
-    const content = codeCells[i].innerText.trim();
-    if (content.length > 0) {
-      codeCells[i].classList.add("next-highlight");
-      break;
-    }
-  }
+  // for (let i = lineNumber; i < codeCells.length; i++) {
+  //   const content = codeCells[i].innerText.trim();
+  //   if (content.length > 0) {
+  //     codeCells[i].classList.add("next-highlight");
+  //     break;
+  //   }
+  // }
 }
 
 style.textContent += `
