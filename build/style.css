@@ -1,14 +1,20 @@
 /* styles.css */
+
+/* Style for the main visualizer container */
 .visualizer {
-  width: 750px !important;
-  border: 2px solid #ccc !important;
-  border-radius: 6px !important;
-  padding: 10px !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+  width: 750px !important;  /* Fix the component width to 750px */
+  border: 2px solid #ccc !important;  /* Add a light gray border */
+  border-radius: 6px !important;  /* Rounded corners */
+  padding: 10px;  /* Inner spacing */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;  /* Subtle shadow for depth */
 }
+
+/* Hide resize handles*/
 .ui-resizable-handle {
   display: none !important;
 }
+
+/* Limit the max height of the Python code output container */
 #pyCodeOutputDiv {
-  max-height: 350px !important;
+  max-height: 350px !important;  /* Prevent it from growing too tall */
 }
