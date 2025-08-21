@@ -18,3 +18,8 @@
 #pyCodeOutputDiv {
   max-height: 350px !important;  /* Prevent it from growing too tall */
 }
+
+.ExecutionVisualizer #executionSlider {
+  margin-left: 24px !important;  
+  width: 700px !important;                   
+}
