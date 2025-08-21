@@ -55,7 +55,7 @@ The script will:
 
 #### **Latest main:**
 ```html
-<script src="https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@28e1db2/loader.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@d7d4115/loader.js"></script>
 ```
 
 #### **Minimal HTML example**
