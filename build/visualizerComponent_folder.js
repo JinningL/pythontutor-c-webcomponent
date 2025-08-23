@@ -4,12 +4,8 @@ class CVisualizer extends HTMLElement {
   
     // This method is automatically called when the element is inserted into the DOM
     async connectedCallback() {
-      
-      // Get the current page name (without extension) to build the path for trace.json
-      const pageStem = (location.pathname.split('/').pop() || 'index')
-        .replace(/\.[^/.]+$/, '') || 'index';
-      
-      // Get the current page name (without extension) to build the path for trace.json
+  
+      // Get example number
       const exampleStr = (this.getAttribute("example") || "").trim();
   
       // Validate that "example" is a positive integer
@@ -18,9 +14,12 @@ class CVisualizer extends HTMLElement {
         console.error("[c-visualizer] Invalid 'example':", exampleStr);
         return;
       }
-    
+  
       // Build the path to the trace.json file
-      const traceUrl = `../../trace/${pageStem}/example${exampleStr}/trace.json`;
+      let relPath = location.pathname.replace(/^\//, "").replace(/\.[^/.]+$/, "");
+      const depth = relPath.split("/").length;
+      const prefix = "../".repeat(depth);
+      const traceUrl = `${prefix}trace/example/${relPath}/example${exampleStr}/trace.json`;
   
       // Get language from "lang" attribute, default to "c"
       const frontendLang = this.getAttribute("lang") || "c";
@@ -44,10 +43,8 @@ class CVisualizer extends HTMLElement {
             window.stepNotes = inlineNotes;
             window.foldData  = inlineFolds;
   
-            // console.log("", inlineFolds);
-  
           } catch (e) {
-            console.warn("[annotation] 内联 JSON 解析失败：", e);
+            console.warn("[annotation] Inline JSON parsing failed:", e);
           }
         }
         // Optional: sync notes and folds globally even if no inline script was found
@@ -56,7 +53,7 @@ class CVisualizer extends HTMLElement {
       })(this);
   
       // Create a unique div ID and display a "Loading..." placeholder
-      const divId = `vis-${pageStem}-ex${exampleStr}-${Math.floor(Math.random() * 100000)}`;
+      const divId = `vis-${relPath.replace(/[\/]/g, "-")}-ex${exampleStr}-${Math.floor(Math.random() * 100000)}`;
       this.innerHTML = `<div id="${divId}">Loading trace...</div>`;
   
       try {
@@ -67,8 +64,8 @@ class CVisualizer extends HTMLElement {
         new window.ExecutionVisualizer(divId, trace, {
           embeddedMode: true,   // run in embedded (inline) mode
           lang: frontendLang,
-          annotations: inlineNotes, 
-          codeDivWidth: 470,   
+          annotations: inlineNotes,
+          codeDivWidth: 470,
         });
   
       } catch (err) {
