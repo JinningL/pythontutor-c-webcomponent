@@ -14,7 +14,6 @@ Examples:
 """
 
 def extract_code_exact(tag):
-    """提取直系文本节点，去注释，反转义，规范缩进"""
     pieces = []
     for child in tag.contents:
         if isinstance(child, NavigableString) and not isinstance(child, Comment):
@@ -24,8 +23,10 @@ def extract_code_exact(tag):
     raw = re.sub(r"\r\n?|\u2028|\u2029", "\n", raw)
 
     lines = raw.split("\n")
-    while lines and lines[0].strip() == "": lines.pop(0)
-    while lines and lines[-1].strip() == "": lines.pop()
+    while lines and lines[0].strip() == "":
+        lines.pop(0)
+    while lines and lines[-1].strip() == "":
+        lines.pop()
 
     if lines:
         min_indent = None
@@ -38,7 +39,8 @@ def extract_code_exact(tag):
 
     return "\n".join(lines) + "\n"
 
-def handle_file(md_or_html_path: Path, out_root: Path):
+
+def handle_file(md_or_html_path: Path, out_root: Path, book_root: Path):
     if md_or_html_path.suffix.lower() not in {".md", ".html"}:
         return
 
@@ -55,21 +57,28 @@ def handle_file(md_or_html_path: Path, out_root: Path):
         raw = (viz.get("example") or "").strip()
         if not re.fullmatch(r"\d+", raw):
             errors.append(f"[Visualizer #{i}] Invalid 'example': '{raw}' (positive integer required)")
-            examples.append(None); continue
+            examples.append(None)
+            continue
         val = int(raw)
         if val <= 0:
-            errors.append(f"[Visualizer #{i}] 'example' must be > 0"); examples.append(None); continue
+            errors.append(f"[Visualizer #{i}] 'example' must be > 0")
+            examples.append(None)
+            continue
         if val in seen:
-            errors.append(f"[Visualizer #{i}] Duplicate 'example': {val}"); examples.append(None); continue
-        seen.add(val); examples.append(val)
+            errors.append(f"[Visualizer #{i}] Duplicate 'example': {val}")
+            examples.append(None)
+            continue
+        seen.add(val)
+        examples.append(val)
 
     if errors:
-        print("❌ Validation failed:"); [print(" -", e) for e in errors]
+        print("❌ Validation failed:")
+        [print(" -", e) for e in errors]
         return
 
-    page_stem = md_or_html_path.stem
-    # 输出到 “…/trace/<page_stem>/exampleN/”
-    base_dir = out_root / page_stem
+    page_stem = md_or_html_path.stem  
+    rel_folder = md_or_html_path.parent.relative_to(book_root)  
+    base_dir = out_root / "example" / rel_folder / page_stem
     base_dir.mkdir(parents=True, exist_ok=True)
 
     for idx, (viz, ex) in enumerate(zip(visualizers, examples), start=1):
@@ -114,20 +123,24 @@ def handle_file(md_or_html_path: Path, out_root: Path):
         except Exception as e:
             print(f"   ❌ Failed: {e}")
 
+
 def walk_and_generate(book_root: Path):
     # 输出根改为 ../trace
     out_root = book_root.parent / "trace"
     out_root.mkdir(parents=True, exist_ok=True)
     for p in book_root.rglob("*"):
         if p.suffix.lower() in {".md", ".html"}:
-            handle_file(p, out_root)
+            handle_file(p, out_root, book_root)
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print(USAGE); sys.exit(1)
+        print(USAGE)
+        sys.exit(1)
     book_root = Path(sys.argv[1]).resolve()
     if not book_root.exists():
-        print(f"Book root not found: {book_root}"); sys.exit(1)
+        print(f"Book root not found: {book_root}")
+        sys.exit(1)
 
     print(f"Book root: {book_root}")
     print(f"Output root (sibling): {book_root.parent / 'trace'}")
