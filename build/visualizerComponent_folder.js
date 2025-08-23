@@ -17,10 +17,17 @@ class CVisualizer extends HTMLElement {
   
       // Build the path to the trace.json file
       let relPath = location.pathname.replace(/^\//, "").replace(/\.[^/.]+$/, "");
-      const depth = relPath.split("/").length;
-      const prefix = "../".repeat(depth);
-      const traceUrl = `${prefix}trace/example/${relPath}/example${exampleStr}/trace.json`;
-  
+      if (relPath.endsWith("/")) relPath += "index";
+
+      // split: ["textbook","chapters","chapter03-decision-making","multiple-conditions"]
+      const parts = relPath.split("/");
+      const siteBase = parts.shift() || "";          // e.g. "textbook"
+      const pageUnderBase = parts.join("/");         // e.g. "chapters/chapter03-decision-making/multiple-conditions"
+
+      // Absolute URL under the same site base:
+      // -> /textbook/trace/chapters/chapter03-decision-making/multiple-conditions/example1/trace.json
+      const traceUrl = `/${siteBase}/trace/${pageUnderBase}/example${exampleStr}/trace.json`;
+
       // Get language from "lang" attribute, default to "c"
       const frontendLang = this.getAttribute("lang") || "c";
   
