@@ -78,7 +78,7 @@ def handle_file(md_or_html_path: Path, out_root: Path, book_root: Path):
 
     page_stem = md_or_html_path.stem  
     rel_folder = md_or_html_path.parent.relative_to(book_root)  
-    base_dir = out_root / "example" / rel_folder / page_stem
+    base_dir = out_root / rel_folder / page_stem
     base_dir.mkdir(parents=True, exist_ok=True)
 
     for idx, (viz, ex) in enumerate(zip(visualizers, examples), start=1):
