@@ -24,3 +24,8 @@
   margin-right: 24px !important;  
   width:auto !important;        
 }
+
+#creditsPane {
+  margin-left: 24px !important;
+  margin-top: 0 !important;
+}
