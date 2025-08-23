@@ -29,3 +29,11 @@
   margin-left: 24px !important;
   margin-top: 0 !important;
 }
+
+.ExecutionVisualizer #printOutputDocs {
+  margin-left: 9px !important;
+}
+
+.ExecutionVisualizer .ui-wrapper {
+  margin-left: 9px !important;
+}
