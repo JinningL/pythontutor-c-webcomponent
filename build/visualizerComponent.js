@@ -47,7 +47,7 @@ class CVisualizer extends HTMLElement {
           // console.log("", inlineFolds);
 
         } catch (e) {
-          console.warn("[annotation] 内联 JSON 解析失败：", e);
+          console.warn("[annotation] Inline JSON parsing failed:", e);
         }
       }
       // Optional: sync notes and folds globally even if no inline script was found
