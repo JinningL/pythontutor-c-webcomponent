@@ -21,7 +21,7 @@ function addCodeFolding(domRoot, startLine, endLine, initialFolded = true) {
   const lineNoTd = toggleRow.querySelector("td.lineNo") || toggleRow.children[0] || null;
   if (!lineNoTd) return;
 
-   // Remove any existing toggle to avoid duplicates
+  // Remove any existing toggle to avoid duplicates
   lineNoTd.querySelector(".toggle")?.remove();
 
   const arrow = document.createElement("span");
@@ -36,13 +36,15 @@ function addCodeFolding(domRoot, startLine, endLine, initialFolded = true) {
   const rec = { start: startLine, end: endLine, folded: initialFolded };
   window.foldedRanges.push(rec);
 
-  // Hide or show the target rows depending on initial state
+  // Hide or show target rows depending on initial state
   for (let i = startLine; i < endLine; i++) {
     allRows[i].style.display = initialFolded ? "none" : "";
   }
 
-  // Toggle behavior when clicking the arrow
-  arrow.addEventListener("click", () => {
+  // Only prevent bubbling to breakpoint listeners when clicking the arrow,
+  // then perform the fold/unfold toggle.
+  arrow.addEventListener("click", (e) => {
+    e.stopPropagation(); // prevent bubbling to breakpoint handler
     rec.folded = !rec.folded;
     for (let i = startLine; i < endLine; i++) {
       allRows[i].style.display = rec.folded ? "none" : "";
@@ -64,12 +66,10 @@ function findDomRoot() {
   return null;
 }
 
-
 window.applyCodeFolding = function (domRoot, folds) {
   let rootEl = domRoot && (domRoot.jquery ? domRoot[0] : domRoot);
   rootEl = rootEl || findDomRoot();
   if (!rootEl) return;
-
 
   const raw = (Array.isArray(folds) && folds.length ? folds : (window.foldData || []));
   const list = raw.filter(
