@@ -47,3 +47,7 @@
   padding-left: 15px !important;   
   padding-right: 0px !important;
 }
+
+.ExecutionVisualizer #heap {
+  padding-left: 10px !important;  
+}
