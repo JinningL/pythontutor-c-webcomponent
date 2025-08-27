@@ -39,6 +39,11 @@
 }
 
 #stackHeader {
-  text-align: left !important;  
-  padding-left: 4px;             
+  text-align: left !important;              
+}
+
+.ExecutionVisualizer #stack,
+.ExecutionVisualizer #globals_area {
+  padding-left: 15px !important;   
+  padding-right: 0px !important;
 }
