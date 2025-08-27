@@ -55,3 +55,8 @@
 .ExecutionVisualizer #progOutputs {
   margin-left: 7px !important;  
 }
+
+.ExecutionVisualizer #vcrControls button,
+.ExecutionVisualizer #initVizButton {
+  all: revert !important;   
+}
