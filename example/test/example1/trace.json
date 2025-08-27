@@ -1,5 +1,5 @@
 {
-  "code": "#include <stdio.h>\n\n// regular\nstruct Account {\n    int account_number;\n    double balance;\n    char *first_name;\n    char *last_name;\n};\n\n// typedef version\ntypedef struct {\n    int    xxx;\n    int    yyy;\n} Point;\n\nint main() {\n  struct Account my_account;\n  my_account.account_number = 42;\n  my_account.balance = 3.141592653589735;\n  my_account.first_name = \"Jinning\";\n  my_account.last_name = \"Liu\";\n  printf(\"hello\");\n\n  Point my_point;\n  my_point.xxx = 12345;\n  my_point.yyy = 54321;\n  return 0;\n}\n",
+  "code": "#include <stdio.h>\n\n  // regular\n  struct Account {\n     int account_number;\n     double balance;\n     char *first_name;\n     char *last_name;\n  };\n\n  // typedef version\n  typedef struct {\n     int    xxx;\n     int    yyy;\n  } Point;\n\n  int main() {\n    struct Account my_account;\n    my_account.account_number = 42;\n    my_account.balance = 3.141592653589735;\n    my_account.first_name = \"Jinning\";\n    my_account.last_name = \"Liu\";\n    printf(\"hello\");\n\n    Point my_point;\n    my_point.xxx = 12345;\n    my_point.yyy = 54321;\n    return 0;\n  }   \n",
   "trace": [
     {
       "event": "step_line",
