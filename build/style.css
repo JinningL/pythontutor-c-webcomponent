@@ -37,3 +37,8 @@
 .ExecutionVisualizer .ui-wrapper {
   margin-left: 9px !important;
 }
+
+#stackHeader {
+  text-align: left !important;  
+  padding-left: 4px;             
+}
