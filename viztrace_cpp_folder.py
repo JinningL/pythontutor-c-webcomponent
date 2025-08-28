@@ -86,7 +86,7 @@ def handle_file(md_or_html_path: Path, out_root: Path, book_root: Path):
         out_dir = base_dir / f"example{ex}"
         out_dir.mkdir(parents=True, exist_ok=True)
 
-        code_path = out_dir / "code.c"
+        code_path = out_dir / "code.cpp"
         trace_path = out_dir / "trace.json"
         code_path.write_text(code, encoding="utf-8")
 
@@ -101,11 +101,11 @@ def handle_file(md_or_html_path: Path, out_root: Path, book_root: Path):
                 "heap_primitives": False,
                 "show_only_outputs": False,
                 "origin": "opt-frontend.js",
-                "cpp_version": "c_gcc9.3.0",
+                "cpp_version": "cpp_g++9.3.0",
                 "fe_disableHeapNesting": True,
                 "fe_textualMemoryLabels": False
             }),
-            "lang": "c",
+            "lang": "cpp",
             "stdin": "",
             "backend_options_json": "{}",
             "frontend_options_json": "{}",
@@ -125,7 +125,6 @@ def handle_file(md_or_html_path: Path, out_root: Path, book_root: Path):
 
 
 def walk_and_generate(book_root: Path):
-    # 输出根改为 ../trace
     out_root = book_root.parent / "trace"
     out_root.mkdir(parents=True, exist_ok=True)
     for p in book_root.rglob("*"):
