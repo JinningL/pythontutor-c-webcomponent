@@ -33,16 +33,16 @@ Code execution visualization with inline annotations and heap/stack view:
 
 **macOS / Linux:**
 ```bash
-curl -L -O https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@main/viztrace.py
+curl -L -O https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@main/viztrace_c.py
 pip install beautifulsoup4 requests
-python viztrace.py your-page.html
+python viztrace_c.py your-page.html
 ```
 
 **Windows (PowerShell)**
 ```bash
-iwr https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@main/viztrace.py -OutFile viztrace.py
+iwr https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@main/viztrace_c.py -OutFile viztrace_c.py
 pip install beautifulsoup4 requests
-python viztrace.py your-page.html
+python viztrace_c.py your-page.html
 ```
 
 The script will:
@@ -58,18 +58,18 @@ If you want to generate traces for an entire textbook/multi-page project, downlo
 
 **macOS / Linux:**
 ```bash
-curl -L -O https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@main/viztrace_folder.py
+curl -L -O https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@main/viztrace_c_folder.py
 pip install beautifulsoup4 requests
 ```
 **Windows (PowerShell)**
 ```bash
-iwr https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@main/viztrace_folder.py -OutFile viztrace_folder.py
+iwr https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@main/viztrace_c_folder.py -OutFile viztrace_c_folder.py
 pip install beautifulsoup4 requests
 ```
 
 Then run it on your book folder:
 ```bash
-python viztrace_folder.py textbook
+python viztrace_c_folder.py textbook
 ```
 Your textbook must be organized like this:
 ```plaintext
