@@ -1,82 +1,82 @@
-// Define a custom HTML element <c-visualizer>
 class CVisualizer extends HTMLElement {
     constructor() { super(); }
   
-    // This method is automatically called when the element is inserted into the DOM
+    // Called automatically when the element is inserted into the DOM
     async connectedCallback() {
-  
-      // Get example number
+      // 1) Read and validate the "example" attribute (must be a positive integer)
       const exampleStr = (this.getAttribute("example") || "").trim();
-  
-      // Validate that "example" is a positive integer
       if (!/^\d+$/.test(exampleStr)) {
         this.innerHTML = `<p style="color:red;">❌ Error: &lt;c-visualizer&gt; requires a valid example number (positive integer).</p>`;
         console.error("[c-visualizer] Invalid 'example':", exampleStr);
         return;
       }
   
+      // 2) Build the trace URL based on current page path
       let relPath = location.pathname.replace(/^\//, "").replace(/\.[^/.]+$/, "");
       if (relPath.endsWith("/")) relPath += "index";
-
-      const parts = relPath.split("/");
+      const parts  = relPath.split("/");
       const folder = parts.length > 1 ? parts[parts.length - 2] : "";
       const page   = parts[parts.length - 1];
       const traceUrl = `/trace/${folder}/${page}/example${exampleStr}/trace.json`;
-
-      // Get language from "lang" attribute, default to "c"
-      const frontendLang = this.getAttribute("lang") || "c";
   
-      // Read inline <script> JSON (annotations and folds) before overwriting innerHTML
-      let inlineNotes = {};
-      let inlineFolds = [];
-      (function readInlineAnnotation(hostEl){
-        // Look for <script type="application/json" data-kind="annotation"> inside this element
-        const el = hostEl.querySelector('script[type="application/json"][data-kind="annotation"]');
-        if (el) {
-          try {
-            // Parse JSON content and extract "annotation" and "folds"
-            const parsed = JSON.parse((el.textContent || "").trim());
-            inlineNotes = parsed.annotation || {};
-            inlineFolds = (parsed.folds || []).filter(
-              it => it && Number.isFinite(it.start) && Number.isFinite(it.end) && it.end > it.start
-            );
-  
-            // Save to global variables for backward compatibility
-            window.stepNotes = inlineNotes;
-            window.foldData  = inlineFolds;
-  
-          } catch (e) {
-            console.warn("[annotation] Inline JSON parsing failed:", e);
-          }
+      // 3) Read inline JSON (annotations + folds) scoped to this custom element only
+      let annotations = {};
+      let folds = [];
+      const inlineEl = this.querySelector('script[type="application/json"][data-kind="annotation"]');
+      if (inlineEl) {
+        try {
+          const parsed = JSON.parse((inlineEl.textContent || "").trim());
+          annotations = parsed.annotation || {};
+          // keep only valid ranges: 1-based lines, end > start
+          folds = (parsed.folds || []).filter(
+            it => it && Number.isFinite(it.start) && Number.isFinite(it.end) && it.end > it.start
+          );
+        } catch (e) {
+          console.warn("[annotation] Inline JSON parsing failed:", e);
         }
-        // Optional: sync notes and folds globally even if no inline script was found
-        window.stepNotes = inlineNotes;
-        window.foldData = inlineFolds;
-      })(this);
-  
-      // Create a unique div ID and display a "Loading..." placeholder
-      const divId = `vis-${relPath.replace(/[\/]/g, "-")}-ex${exampleStr}-${Math.floor(Math.random() * 100000)}`;
-      this.innerHTML = `<div id="${divId}">Loading trace...</div>`;
-  
-      try {
-        // Fetch the execution trace JSON file
-        const trace = await (await fetch(traceUrl)).json();
-  
-        // Initialize the ExecutionVisualizer with options
-        new window.ExecutionVisualizer(divId, trace, {
-          embeddedMode: true,   // run in embedded (inline) mode
-          lang: frontendLang,
-          annotations: inlineNotes,
-          codeDivWidth: 470,
-        });
-  
-      } catch (err) {
-        // Handle errors when trace.json cannot be loaded
-        this.innerHTML = `<p style="color:red;">Cannot load ${traceUrl}</p>`;
-        console.error("Trace failed", err);
       }
+  
+      // 4) Create a unique container and show a temporary placeholder
+      const divId = `vis-${relPath.replace(/\//g, "-")}-ex${exampleStr}-${Math.floor(Math.random() * 100000)}`;
+      this.innerHTML = `<div id="${divId}">Loading trace...</div>`;
+      const rootEl = document.getElementById(divId);
+  
+      // 5) Attach instance-private data to this container
+      rootEl.__stepNotes = annotations;
+      rootEl.__folds = folds;
+  
+      // 6) Fetch the execution trace JSON
+      let trace;
+      try {
+        const resp = await fetch(traceUrl);
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        trace = await resp.json();
+      } catch (err) {
+        this.innerHTML = `<p style="color:red;">Cannot load ${traceUrl}</p>`;
+        console.error("[c-visualizer] Trace failed", err);
+        return;
+      }
+  
+      // 7) Initialize the ExecutionVisualizer (pass annotations directly)
+      const lang = this.getAttribute("lang") || "c";
+      const viz = new window.ExecutionVisualizer(divId, trace, {
+        embeddedMode: true,
+        lang,    
+        codeDivWidth: 470,
+      });
+  
+      // 8) Optionally keep a handle for debugging (still instance-private)
+      rootEl.__viz = viz;
+  
+      // 9) Apply code folding for this instance on the next frame
+      requestAnimationFrame(() => {
+        // expects your applyCodeFolding(rootEl, folds) to act only within rootEl
+        window.applyCodeFolding?.(rootEl, folds);
+      });
     }
   }
   
-  // Register the custom element <c-visualizer>
-  customElements.define("c-visualizer", CVisualizer);
+  // Define the custom element once 
+  if (!customElements.get("c-visualizer")) {
+    customElements.define("c-visualizer", CVisualizer);
+  }

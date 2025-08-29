@@ -1,74 +1,71 @@
+// Inject global styles once
 const style = document.createElement("style");
 style.textContent = `
-
-     td.cod {
+  td.cod {
     font-family: Menlo, monospace;
     font-size: 11pt;
     background-color: #ffffff;
     border-radius: 4px;
     white-space: nowrap;
   }
-  `;
-
-document.head.appendChild(style);
-
-// Wait until DOM and visualize rendering are finished
-function highlightCode() {
-  const interval = setInterval(() => {
-    // console.log("Highlight script running");
-    // Select all elements with class "td.cod" rendered by visualize.js
-    const codeCells = document.querySelectorAll("td.cod");
-    if (codeCells.length > 0) {
-      codeCells.forEach((cell) => {
-        const raw = cell.innerText;
-        //console.log("Raw content:\n-----\n" + raw + "\n-----");
-        const highlighted = Prism.highlight(raw, Prism.languages.c, "c");
-        const final = highlighted.replace(/^(\s+)/, (m) =>
-          "&nbsp;".repeat(m.length)
-        );
-
-        cell.innerHTML = final;
-      });
-      clearInterval(interval);
-    }
-  }, 100);
-}
-
-window.addEventListener("load", highlightCode);
-
-function highlightExecutedLine(lineNumber) {
-  const codeCells = document.querySelectorAll("td.cod");
-
-  // Clear all previous highlights
-  codeCells.forEach((cell) => {
-    cell.classList.remove("executed-highlight");
-  });
-  // codeCells.forEach((cell) => {
-  //   cell.classList.remove("next-highlight");
-  // });
-
-  // Highlight the target line (note: lineNumber starts from 1, DOM index starts from 0)
-  const target = codeCells[lineNumber - 1];
-  if (target) {
-    target.classList.add("executed-highlight");
-  }
-
-  // for (let i = lineNumber; i < codeCells.length; i++) {
-  //   const content = codeCells[i].innerText.trim();
-  //   if (content.length > 0) {
-  //     codeCells[i].classList.add("next-highlight");
-  //     break;
-  //   }
-  // }
-}
-
-style.textContent += `
   .executed-highlight {
     background-color: #fffbd0 !important; 
     transition: background-color 0.2s;
   }
-  .next-highlight {
-    background-color:rgb(255, 255, 255)  !important;
-    transition: background-color 0.2s;
-  }
 `;
+document.head.appendChild(style);
+
+// Syntax-highlight all td.cod inside a given rootEl
+function highlightCodeIn(rootEl) {
+  const scope = rootEl && rootEl.jquery ? rootEl[0] : rootEl || document;
+  const cells = scope.querySelectorAll("td.cod");
+  if (!cells.length) return;
+
+  cells.forEach((cell) => {
+    // Skip if already highlighted
+    if (cell.dataset.highlighted === "1") return;
+
+    const raw = cell.innerText;
+    const html = Prism.highlight(raw, Prism.languages.c, "c");
+    const withSpaces = html.replace(/^(\s+)/, (m) => "&nbsp;".repeat(m.length));
+    cell.innerHTML = withSpaces;
+    cell.dataset.highlighted = "1";
+  });
+}
+
+//Highlight the executed line inside one instance 
+function highlightExecutedLine(lineNumber, domRoot) {
+  const scope = domRoot && domRoot.jquery ? domRoot[0] : domRoot || document;
+  const codeCells = scope.querySelectorAll("td.cod");
+
+  // Clear previous highlight
+  codeCells.forEach((cell) => cell.classList.remove("executed-highlight"));
+
+  // lineNumber is 1-based; DOM NodeList is 0-based
+  const target = codeCells[lineNumber - 1];
+  if (target) target.classList.add("executed-highlight");
+}
+
+// Attach highlighting hooks to an ExecutionVisualizer instance 
+function attachHighlighter(viz) {
+  if (!viz || !viz.domRoot) return;
+
+  // First paint after initial render
+  requestAnimationFrame(() => highlightCodeIn(viz.domRoot));
+
+  // Re-highlight on every output update (preserve any existing callback)
+  const oldCb = viz.params.updateOutputCallback;
+  viz.params.updateOutputCallback = (v) => {
+    if (typeof oldCb === "function") oldCb(v);
+    highlightCodeIn(v.domRoot);
+  };
+
+  const rootEl = viz.domRoot.jquery ? viz.domRoot[0] : viz.domRoot;
+  const mo = new MutationObserver(() => highlightCodeIn(rootEl));
+  mo.observe(rootEl, { childList: true, subtree: true });
+}
+
+// Export helpers
+// window.highlightCodeIn = highlightCodeIn;
+window.highlightExecutedLine = highlightExecutedLine;
+window.attachHighlighter = attachHighlighter;
