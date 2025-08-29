@@ -2,7 +2,7 @@
 
 /* Style for the main visualizer container */
 .visualizer {
-  width: 100% !important;  /* Fix the component width to 750px */
+  width: 100% !important;  
   border: 2px solid #ccc !important;  /* Add a light gray border */
   border-radius: 6px !important;  /* Rounded corners */
   padding: 10px;  /* Inner spacing */
