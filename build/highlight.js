@@ -1,23 +1,19 @@
-(function injectVisualizerStyleOnce() {
-  if (document.getElementById('visualizer-style')) return;
-
-  const styleEl = document.createElement('style');
-  styleEl.id = 'visualizer-style';
-  styleEl.textContent = `
-    td.cod {
-      font-family: Menlo, monospace;
-      font-size: 11pt;
-      background-color: #ffffff;
-      border-radius: 4px;
-      white-space: nowrap;
-    }
-    .executed-highlight {
-      background-color: #fffbd0 !important;
-      transition: background-color 0.2s;
-    }
-  `;
-  document.head.appendChild(styleEl);
-})();
+// Inject global styles once
+const style = document.createElement("style");
+style.textContent = `
+  td.cod {
+    font-family: Menlo, monospace;
+    font-size: 11pt;
+    background-color: #ffffff;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .executed-highlight {
+    background-color: #fffbd0 !important; 
+    transition: background-color 0.2s;
+  }
+`;
+document.head.appendChild(style);
 
 // Syntax-highlight all td.cod inside a given rootEl
 function highlightCodeIn(rootEl) {
