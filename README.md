@@ -100,12 +100,12 @@ trace/
 
 #### **Single-page demo**
 ```html
-<script src="https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@d5fcc43/loader.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@aee70fd/loader.js"></script>
 ```
 
 **Textbook / multi-page project**
 ```html
-<script src="https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@d5fcc43/loader_folder.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/JinningL/pythontutor-c-webcomponent@aee70fd/loader_folder.js"></script>
 ```
 
 #### **Minimal HTML example**
