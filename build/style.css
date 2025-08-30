@@ -10,9 +10,9 @@
 }
 
 /* Hide resize handles*/
-.ui-resizable-handle {
+/* .ui-resizable-handle {
   display: none !important;
-}
+} */
 
 /* Limit the max height of the Python code output container */
 #pyCodeOutputDiv {
@@ -59,4 +59,14 @@
 .ExecutionVisualizer #vcrControls button,
 .ExecutionVisualizer #initVizButton {
   all: revert !important;   
+}
+
+.ExecutionVisualizer .ui-wrapper {
+  max-width: 600px;  
+  max-height: 200px;  
+}
+
+.ExecutionVisualizer #pyStdout {
+  max-width: 600px;   
+  max-height: 200px;  
 }
