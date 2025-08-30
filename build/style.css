@@ -60,18 +60,3 @@
 .ExecutionVisualizer #initVizButton {
   all: revert !important;   
 }
-
-.ExecutionVisualizer .ui-wrapper {
-  width: 600px !important;  
-  max-height: 200px !important; 
-  min-height: 45px !important;
-  height: 45px;
-  resize: both; 
-}
-
-.ExecutionVisualizer #pyStdout {
-  width: 100% !important; 
-  height: 100% !important;
-  box-sizing: border-box;
-  resize: none !important; 
-}
