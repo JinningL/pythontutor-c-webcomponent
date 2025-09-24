@@ -65,7 +65,8 @@ window.showStepNote = function (_stepIndex, lineNumber, domRoot) {
       trigger: 'manual',
       hideOnClick: true,
       interactive: true,
-      maxWidth: 260
+      maxWidth: 260,
+      zIndex: 2147483647,   
     });
 
     // Automatically hide when the line scrolls out of view
