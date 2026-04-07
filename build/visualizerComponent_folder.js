@@ -11,13 +11,10 @@ class CVisualizer extends HTMLElement {
         return;
       }
   
-      // 2) Build the trace URL based on current page path
+      // 2) Build the trace URL based on the full current page path
       let relPath = location.pathname.replace(/^\//, "").replace(/\.[^/.]+$/, "");
       if (relPath.endsWith("/")) relPath += "index";
-      const parts  = relPath.split("/");
-      const folder = parts.length > 1 ? parts[parts.length - 2] : "";
-      const page   = parts[parts.length - 1];
-      const traceUrl = `/trace/${folder}/${page}/example${exampleStr}/trace.json`;
+      const traceUrl = `trace/${relPath}/example${exampleStr}/trace.json`;
   
       // 3) Read inline JSON (annotations + folds) scoped to this custom element only
       let annotations = {};

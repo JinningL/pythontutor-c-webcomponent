@@ -1,5 +1,26 @@
 (function () {
-  
+  function loadCSS(href) {
+    return new Promise((resolve, reject) => {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = href;
+      link.onload = resolve;
+      link.onerror = reject;
+      document.head.appendChild(link);
+    });
+  }
+
+  function loadJS(src, type) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      if (type) script.type = type;
+      script.src = src;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+
   const self = document.currentScript && document.currentScript.src;
   const m = self && self.match(/@([^/]+)\/loader\.js$/);
   const ver = (m && m[1]) || "main";
@@ -11,7 +32,6 @@
     "https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css",
     "https://unpkg.com/tippy.js@6/dist/tippy.css",
   ];
-  css.forEach(h => { const l=document.createElement("link"); l.rel="stylesheet"; l.href=h; document.head.appendChild(l); });
 
   const js = [
     "https://cdn.jsdelivr.net/npm/prismjs/prism.js",
@@ -23,10 +43,13 @@
     `${base}improved-visualize.js`,
     `${base}highlight.js`,
   ];
-  js.forEach(s => { const el=document.createElement("script"); el.src=s; document.head.appendChild(el); });
 
-  const esm = document.createElement("script");
-  esm.type = "module";
-  esm.src = `${base}visualizerComponent.js`;
-  document.head.appendChild(esm);
+  Promise.all(css.map(loadCSS))
+    .catch(() => {})
+    .then(async () => {
+      for (const src of js) {
+        await loadJS(src);
+      }
+      await loadJS(`${base}visualizerComponent.js`, "module");
+    });
 })();
