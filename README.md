@@ -115,7 +115,6 @@ If you want the same batch flow for C++, use `viztrace_cpp_folder.py`.
 #### **Minimal HTML example**
 ```html
 <!doctype html>
-<!doctype html>
 <html>
 <head>
   <meta charset="utf-8" />

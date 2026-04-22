@@ -2,10 +2,11 @@
 
 /* Style for the main visualizer container */
 .visualizer {
+  box-sizing: border-box !important;
   width: 100% !important;  
   border: 2px solid #ccc !important;  /* Add a light gray border */
-  border-radius: 6px !important;  /* Rounded corners */
-  padding: 10px;  /* Inner spacing */
+  border-radius: 16px !important;  /* Rounded corners */
+  padding: 24px 28px 28px;  /* Inner spacing */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;  /* Subtle shadow for depth */
 }
 
