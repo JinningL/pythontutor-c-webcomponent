@@ -4,10 +4,11 @@
 .visualizer {
   box-sizing: border-box !important;
   width: 100% !important;  
-  border: 2px solid #ccc !important;  /* Add a light gray border */
+  background: #fff !important;
+  border: 2px solid #d7dce2 !important;  /* Add a light gray border */
   border-radius: 16px !important;  /* Rounded corners */
   padding: 24px 28px 28px;  /* Inner spacing */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;  /* Subtle shadow for depth */
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08) !important;  /* Subtle shadow for depth */
 }
 
 /* Hide resize handles*/
@@ -16,8 +17,24 @@
 }
 
 /* Limit the max height of the Python code output container */
-#pyCodeOutputDiv {
-  max-height: 350px !important;  /* Prevent it from growing too tall */
+.ExecutionVisualizer #pyCodeOutputDiv {
+  max-height: 420px !important;  /* Prevent it from growing too tall */
+  margin-top: 10px !important;
+  margin-bottom: 18px !important;
+}
+
+.ExecutionVisualizer table#pyCodeOutput {
+  font-size: 12pt !important;
+  line-height: 1.32 !important;
+}
+
+.ExecutionVisualizer table#pyCodeOutput .lineNo {
+  color: #9aa3ad !important;
+}
+
+.ExecutionVisualizer .executed-highlight {
+  background-color: #fff4b8 !important;
+  border-radius: 6px !important;
 }
 
 .ExecutionVisualizer #executionSlider {
@@ -57,7 +74,25 @@
   margin-left: 7px !important;  
 }
 
+.ExecutionVisualizer #dataViz {
+  margin-top: 24px !important;
+}
+
 .ExecutionVisualizer #vcrControls button,
 .ExecutionVisualizer #initVizButton {
-  all: revert !important;   
+  all: revert !important;
+  font: 13px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  color: #2f343a !important;
+  background: #f4f6f8 !important;
+  border: 1px solid #d2d7de !important;
+  border-radius: 7px !important;
+  padding: 4px 12px !important;
+  margin: 0 3px !important;
+  cursor: pointer !important;
+}
+
+.ExecutionVisualizer #vcrControls button:disabled,
+.ExecutionVisualizer #initVizButton:disabled {
+  color: #a5abb3 !important;
+  cursor: default !important;
 }
